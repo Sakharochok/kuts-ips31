@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/dance"
+           xmlns="http://example.com/dance"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="DanceType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ballroom"/>
+            <xs:enumeration value="folk"/>
+            <xs:enumeration value="pop"/>
+            <xs:enumeration value="oriental"/>
+            <xs:enumeration value="contemporary"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SceneType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="assembly hall"/>
+            <xs:enumeration value="street stage"/>
+            <xs:enumeration value="tv studio"/>
+            <xs:enumeration value="theatre"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DancersCategory">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="mass"/>
+            <xs:enumeration value="solo"/>
+            <xs:enumeration value="duet"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MusicType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="phonogram"/>
+            <xs:enumeration value="live music"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="AgeType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="3"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ExperienceType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="80"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ProgramNumberType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="DancerType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="age" type="AgeType"/>
+            <xs:element name="experienceYears" type="ExperienceType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DancersListType">
+        <xs:sequence>
+            <xs:element name="dancer" type="DancerType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DanceItemType">
+        <xs:sequence>
+            <xs:element name="scene" type="SceneType"/>
+            <xs:element name="numberOfDancers" type="DancersCategory"/>
+            <xs:element name="music" type="MusicType"/>
+            <xs:element name="dancers" type="DancersListType"/>
+            <xs:element name="number" type="ProgramNumberType"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="type" type="DanceType" use="required"/>
+        <xs:attribute name="title" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:element name="Dances">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Dance" type="DanceItemType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

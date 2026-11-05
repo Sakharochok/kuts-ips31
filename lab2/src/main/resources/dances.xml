@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dances xmlns="http://example.com/dance"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://example.com/dance dance.xsd">
+    <Dance id="d1" type="ballroom" title="Viennese Waltz">
+        <scene>theatre</scene>
+        <numberOfDancers>duet</numberOfDancers>
+        <music>live music</music>
+        <dancers>
+            <dancer>
+                <name>Oleksandr Melnyk</name>
+                <age>22</age>
+                <experienceYears>12</experienceYears>
+            </dancer>
+            <dancer>
+                <name>Olena Shevchenko</name>
+                <age>20</age>
+                <experienceYears>10</experienceYears>
+            </dancer>
+        </dancers>
+        <number>3</number>
+    </Dance>
+
+    <Dance id="d2" type="folk" title="Hopak">
+        <scene>street stage</scene>
+        <numberOfDancers>mass</numberOfDancers>
+        <music>live music</music>
+        <dancers>
+            <dancer>
+                <name>Ensemble Kalyna</name>
+                <age>25</age>
+                <experienceYears>8</experienceYears>
+            </dancer>
+        </dancers>
+        <number>1</number>
+    </Dance>
+
+    <Dance id="d3" type="ballroom" title="Tango Passion">
+        <scene>assembly hall</scene>
+        <numberOfDancers>duet</numberOfDancers>
+        <music>phonogram</music>
+        <dancers>
+            <dancer>
+                <name>Maksym Koval</name>
+                <age>27</age>
+                <experienceYears>15</experienceYears>
+            </dancer>
+        </dancers>
+        <number>7</number>
+    </Dance>
+
+    <Dance id="d4" type="oriental" title="Silk Path">
+        <scene>tv studio</scene>
+        <numberOfDancers>solo</numberOfDancers>
+        <music>phonogram</music>
+        <dancers>
+            <dancer>
+                <name>Daria Bondarenko</name>
+                <age>24</age>
+                <experienceYears>6</experienceYears>
+            </dancer>
+        </dancers>
+        <number>5</number>
+    </Dance>
+
+    <Dance id="d5" type="folk" title="Polka">
+        <scene>assembly hall</scene>
+        <numberOfDancers>mass</numberOfDancers>
+        <music>phonogram</music>
+        <dancers>
+            <dancer>
+                <name>Radist Troupe</name>
+                <age>18</age>
+                <experienceYears>5</experienceYears>
+            </dancer>
+        </dancers>
+        <number>2</number>
+    </Dance>
+</Dances>
