@@ -45,6 +45,11 @@
                 <age>27</age>
                 <experienceYears>15</experienceYears>
             </dancer>
+            <dancer>
+                <name>Iryna Tkachenko</name>
+                <age>26</age>
+                <experienceYears>14</experienceYears>
+            </dancer>
         </dancers>
         <number>7</number>
     </Dance>

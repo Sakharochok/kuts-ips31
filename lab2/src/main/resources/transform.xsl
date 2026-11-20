@@ -13,7 +13,10 @@
                 <xsl:variable name="groupType" select="@type"/>
                 <xsl:element name="{$groupType}">
                     <xsl:for-each select="key('dancesByType', $groupType)">
-                        <Dance id="{@id}" type="{@type}" title="{@title}">
+                        <Dance id="{@id}" type="{@type}">
+                            <xsl:if test="@title">
+                                <xsl:attribute name="title"><xsl:value-of select="@title"/></xsl:attribute>
+                            </xsl:if>
                             <scene><xsl:value-of select="d:scene"/></scene>
                             <numberOfDancers><xsl:value-of select="d:numberOfDancers"/></numberOfDancers>
                             <music><xsl:value-of select="d:music"/></music>
