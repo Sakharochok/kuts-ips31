@@ -1,16 +1,17 @@
 package com.dance.parser.dom;
 
 import com.dance.model.Dance;
-import com.dance.model.Dancer;
+import com.dance.parser.DanceBuilder;
+import com.dance.parser.DanceParseException;
 import com.dance.parser.DanceParser;
+import com.dance.parser.DanceXml;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,49 +21,55 @@ public class DomDanceParser implements DanceParser {
 
     @Override
     public List<Dance> parse(File xmlFile) {
-        List<Dance> dances = new ArrayList<>();
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(xmlFile);
+            Document doc = factory.newDocumentBuilder().parse(xmlFile);
 
-            NodeList danceNodes = doc.getElementsByTagNameNS("http://example.com/dance", "Dance");
-            for (int i = 0; i < danceNodes.getLength(); i++) {
-                Element danceElem = (Element) danceNodes.item(i);
-                Dance dance = new Dance();
-                dance.setId(danceElem.getAttribute("id"));
-                dance.setType(danceElem.getAttribute("type"));
-                if (danceElem.hasAttribute("title")) {
-                    dance.setTitle(danceElem.getAttribute("title"));
-                }
-                dance.setScene(getText(danceElem, "scene"));
-                dance.setNumberOfDancers(getText(danceElem, "numberOfDancers"));
-                dance.setMusic(getText(danceElem, "music"));
-                dance.setNumber(Integer.parseInt(getText(danceElem, "number")));
+            DanceBuilder builder = new DanceBuilder();
+            walk(doc.getDocumentElement(), builder);
 
-                NodeList dancerNodes = danceElem.getElementsByTagNameNS("http://example.com/dance", "dancer");
-                for (int j = 0; j < dancerNodes.getLength(); j++) {
-                    Element dElem = (Element) dancerNodes.item(j);
-                    Dancer dancer = new Dancer(
-                            getText(dElem, "name"),
-                            Integer.parseInt(getText(dElem, "age")),
-                            Integer.parseInt(getText(dElem, "experienceYears"))
-                    );
-                    dance.getDancers().add(dancer);
-                }
-                dances.add(dance);
-            }
+            List<Dance> dances = builder.getDances();
             LOGGER.info(() -> "DOM parser loaded " + dances.size() + " items.");
+            return dances;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "DOM parse error: " + e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new DanceParseException("DOM parse error: " + xmlFile, e);
         }
-        return dances;
     }
 
-    private String getText(Element parent, String localName) {
-        NodeList nl = parent.getElementsByTagNameNS("http://example.com/dance", localName);
-        return (nl.getLength() > 0) ? nl.item(0).getTextContent().trim() : "";
+    /**
+     * Рекурсивно обходить дерево та передає його вузли в {@link DanceBuilder}
+     * у тому ж порядку, у якому їх бачать потокові парсери.
+     */
+    private void walk(Element element, DanceBuilder builder) {
+        String tag = element.getLocalName();
+        if (DanceXml.DANCE.equals(tag)) {
+            builder.startDance(
+                    element.getAttribute(DanceXml.ATTR_ID),
+                    element.getAttribute(DanceXml.ATTR_TYPE),
+                    element.hasAttribute(DanceXml.ATTR_TITLE) ? element.getAttribute(DanceXml.ATTR_TITLE) : null);
+        } else if (DanceXml.DANCER.equals(tag)) {
+            builder.startDancer();
+        }
+
+        boolean hasChildElements = false;
+        NodeList children = element.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            Node child = children.item(i);
+            if (child.getNodeType() == Node.ELEMENT_NODE) {
+                hasChildElements = true;
+                walk((Element) child, builder);
+            }
+        }
+        if (!hasChildElements) {
+            builder.setField(tag, element.getTextContent().trim());
+        }
+
+        if (DanceXml.DANCER.equals(tag)) {
+            builder.endDancer();
+        } else if (DanceXml.DANCE.equals(tag)) {
+            builder.endDance();
+        }
     }
 }

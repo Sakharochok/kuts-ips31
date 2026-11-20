@@ -1,15 +1,15 @@
 package com.dance.parser.sax;
 
 import com.dance.model.Dance;
-import com.dance.model.Dancer;
+import com.dance.parser.DanceBuilder;
+import com.dance.parser.DanceParseException;
 import com.dance.parser.DanceParser;
+import com.dance.parser.DanceXml;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,36 +22,33 @@ public class SaxDanceParser implements DanceParser {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(true);
-            SAXParser saxParser = factory.newSAXParser();
 
             DanceHandler handler = new DanceHandler();
-            saxParser.parse(xmlFile, handler);
-            LOGGER.info(() -> "SAX parser loaded " + handler.getDances().size() + " items.");
-            return handler.getDances();
+            factory.newSAXParser().parse(xmlFile, handler);
+
+            List<Dance> dances = handler.builder.getDances();
+            LOGGER.info(() -> "SAX parser loaded " + dances.size() + " items.");
+            return dances;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "SAX parse error: " + e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new DanceParseException("SAX parse error: " + xmlFile, e);
         }
     }
 
     private static class DanceHandler extends DefaultHandler {
-        private final List<Dance> dances = new ArrayList<>();
-        private Dance currentDance;
-        private Dancer currentDancer;
+        private final DanceBuilder builder = new DanceBuilder();
         private final StringBuilder content = new StringBuilder();
-
-        public List<Dance> getDances() { return dances; }
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) {
             content.setLength(0);
-            if ("Dance".equals(localName)) {
-                currentDance = new Dance();
-                currentDance.setId(attributes.getValue("id"));
-                currentDance.setType(attributes.getValue("type"));
-                currentDance.setTitle(attributes.getValue("title"));
-            } else if ("dancer".equals(localName)) {
-                currentDancer = new Dancer();
+            if (DanceXml.DANCE.equals(localName)) {
+                builder.startDance(
+                        attributes.getValue(DanceXml.ATTR_ID),
+                        attributes.getValue(DanceXml.ATTR_TYPE),
+                        attributes.getValue(DanceXml.ATTR_TITLE));
+            } else if (DanceXml.DANCER.equals(localName)) {
+                builder.startDancer();
             }
         }
 
@@ -62,34 +59,14 @@ public class SaxDanceParser implements DanceParser {
 
         @Override
         public void endElement(String uri, String localName, String qName) {
-            String text = content.toString().trim();
-            if (currentDance != null) {
-                switch (localName) {
-                    case "scene": currentDance.setScene(text); break;
-                    case "numberOfDancers": currentDance.setNumberOfDancers(text); break;
-                    case "music": currentDance.setMusic(text); break;
-                    case "number": currentDance.setNumber(Integer.parseInt(text)); break;
-                    case "name":
-                        if (currentDancer != null) currentDancer.setName(text);
-                        break;
-                    case "age":
-                        if (currentDancer != null) currentDancer.setAge(Integer.parseInt(text));
-                        break;
-                    case "experienceYears":
-                        if (currentDancer != null) currentDancer.setExperienceYears(Integer.parseInt(text));
-                        break;
-                    case "dancer":
-                        if (currentDancer != null) {
-                            currentDance.getDancers().add(currentDancer);
-                            currentDancer = null;
-                        }
-                        break;
-                    case "Dance":
-                        dances.add(currentDance);
-                        currentDance = null;
-                        break;
-                }
+            if (DanceXml.DANCER.equals(localName)) {
+                builder.endDancer();
+            } else if (DanceXml.DANCE.equals(localName)) {
+                builder.endDance();
+            } else {
+                builder.setField(localName, content.toString().trim());
             }
+            content.setLength(0);
         }
     }
 }
