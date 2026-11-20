@@ -46,13 +46,14 @@ public class Dance {
         if (o == null || getClass() != o.getClass()) return false;
         Dance dance = (Dance) o;
         return number == dance.number && Objects.equals(id, dance.id) && Objects.equals(type, dance.type)
-                && Objects.equals(scene, dance.scene) && Objects.equals(numberOfDancers, dance.numberOfDancers)
+                && Objects.equals(title, dance.title) && Objects.equals(scene, dance.scene)
+                && Objects.equals(numberOfDancers, dance.numberOfDancers)
                 && Objects.equals(music, dance.music) && Objects.equals(dancers, dance.dancers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number, scene, numberOfDancers, music, dancers);
+        return Objects.hash(id, type, title, number, scene, numberOfDancers, music, dancers);
     }
 
     @Override
