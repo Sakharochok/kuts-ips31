@@ -1,5 +1,6 @@
 package com.dance;
 
+import com.dance.config.LoggingConfig;
 import com.dance.model.Dance;
 import com.dance.model.DanceComparators;
 import com.dance.parser.dom.DomDanceParser;
@@ -16,14 +17,24 @@ public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
-        File xmlFile = new File("src/main/resources/dances.xml");
-        File xsdFile = new File("src/main/resources/dance.xsd");
-        File xslFile = new File("src/main/resources/transform.xsl");
-        File transformedXml = new File("target/dances_transformed.xml");
+        LoggingConfig.init();
+        run(new File("src/main/resources/dances.xml"),
+                new File("src/main/resources/dance.xsd"),
+                new File("src/main/resources/transform.xsl"),
+                new File("target/dances_transformed.xml"));
+    }
 
+    /**
+     * @return true, якщо XML валідний і всі три парсери дали однаковий результат
+     */
+    public static boolean run(File xmlFile, File xsdFile, File xslFile, File transformedXml) {
         // 1. Валідація XSD
         boolean valid = XmlValidator.validate(xmlFile, xsdFile);
         LOGGER.info(() -> "XSD Validation passed: " + valid);
+        if (!valid) {
+            LOGGER.severe("XML is not valid, stopping.");
+            return false;
+        }
 
         // 2. Розбір усіма трьома парсерами
         List<Dance> domList = new DomDanceParser().parse(xmlFile);
@@ -36,17 +47,26 @@ public class Main {
 
         // 4. Демонстрація сортування через Comparator
         domList.sort(DanceComparators.BY_PROGRAM_NUMBER);
-        System.out.println("\n=== Sorted by Program Number (DOM) ===");
-        domList.forEach(System.out::println);
+        logList("Sorted by program number (DOM)", domList);
 
         saxList.sort(DanceComparators.BY_TYPE);
-        System.out.println("\n=== Sorted by Dance Type (SAX) ===");
-        saxList.forEach(System.out::println);
+        logList("Sorted by dance type (SAX)", saxList);
 
-        System.out.println("\n=== StAX Parsed Count: " + staxList.size() + " items ===");
+        staxList.sort(DanceComparators.BY_ID);
+        logList("Sorted by id (StAX)", staxList);
 
         // 5. XSL-трансформація
-        transformedXml.getParentFile().mkdirs();
+        File parent = transformedXml.getAbsoluteFile().getParentFile();
+        if (parent != null) {
+            parent.mkdirs();
+        }
         XmlTransformer.transform(xmlFile, xslFile, transformedXml);
+        return allEqual;
+    }
+
+    private static void logList(String header, List<Dance> dances) {
+        StringBuilder sb = new StringBuilder("=== ").append(header).append(" ===");
+        dances.forEach(d -> sb.append(System.lineSeparator()).append("  ").append(d));
+        LOGGER.info(sb::toString);
     }
 }
