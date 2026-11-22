@@ -1,38 +1,50 @@
 package app.coffee.service;
 
 import app.coffee.model.Coffee;
-import java.util.ArrayList;
+import app.coffee.model.Van;
+
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
+/** Операції з вантажем фургона: завантаження, сортування та пошук. */
 public class VanService {
 
-    public List<Coffee> loadVan(List<Coffee> availableStock, double maxVolume, double maxBudget) {
-        List<Coffee> loadedVan = new ArrayList<>();
-        double currentVolume = 0;
-        double currentBudget = 0;
-
+    /**
+     * Завантажує товари зі складу по черзі; товар, що не вміщується за об'ємом
+     * чи сумою, пропускається, і завантаження продовжується наступним.
+     *
+     * @return той самий фургон із завантаженим вантажем
+     */
+    public Van loadVan(List<Coffee> availableStock, Van van) {
+        Objects.requireNonNull(availableStock, "availableStock");
+        Objects.requireNonNull(van, "van");
         for (Coffee coffee : availableStock) {
-            if (currentVolume + coffee.getVolume() <= maxVolume && currentBudget + coffee.getPrice() <= maxBudget) {
-                loadedVan.add(coffee);
-                currentVolume += coffee.getVolume();
-                currentBudget += coffee.getPrice();
-            }
+            van.load(coffee);
         }
-        return loadedVan;
+        return van;
     }
 
-    public void sortByPriceToWeightRatio(List<Coffee> coffeeList) {
-        coffeeList.sort(Comparator.comparingDouble(Coffee::getPriceToWeightRatio));
+    /** Повертає новий список, відсортований за зростанням співвідношення ціни до ваги. */
+    public List<Coffee> sortByPriceToWeightRatio(List<Coffee> coffeeList) {
+        Objects.requireNonNull(coffeeList, "coffeeList");
+        return coffeeList.stream()
+                .sorted(Comparator.comparingDouble(Coffee::getPriceToWeightRatio))
+                .toList();
     }
 
+    /**
+     * Знаходить товари з оцінкою якості в діапазоні {@code [minQuality, maxQuality]} включно.
+     *
+     * @throws IllegalArgumentException якщо діапазон виходить за межі шкали або min більше за max
+     */
     public List<Coffee> findCoffeeByQuality(List<Coffee> coffeeList, int minQuality, int maxQuality) {
-        List<Coffee> result = new ArrayList<>();
-        for (Coffee coffee : coffeeList) {
-            if (coffee.getQualityScore() >= minQuality && coffee.getQualityScore() <= maxQuality) {
-                result.add(coffee);
-            }
+        Objects.requireNonNull(coffeeList, "coffeeList");
+        if (minQuality < Coffee.MIN_QUALITY || maxQuality > Coffee.MAX_QUALITY || minQuality > maxQuality) {
+            throw new IllegalArgumentException("Invalid quality range [" + minQuality + ", " + maxQuality + "]");
         }
-        return result;
+        return coffeeList.stream()
+                .filter(coffee -> coffee.getQualityScore() >= minQuality && coffee.getQualityScore() <= maxQuality)
+                .toList();
     }
 }

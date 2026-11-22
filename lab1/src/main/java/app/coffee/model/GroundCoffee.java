@@ -1,15 +1,24 @@
 package app.coffee.model;
 
-public class GroundCoffee extends Coffee {
-    private String grindSize;
+import java.util.Objects;
 
-    public GroundCoffee(String name, double price, double weightWithPackaging, double volume, int qualityScore, String grindSize) {
-        super(name, price, weightWithPackaging, volume, qualityScore);
-        this.grindSize = grindSize;
+/** Мелена кава. */
+public class GroundCoffee extends Coffee {
+
+    private final GrindSize grindSize;
+
+    public GroundCoffee(String name, double price, double weightWithPackaging, double volumeWithPackaging,
+                        int qualityScore, GrindSize grindSize) {
+        super(name, price, weightWithPackaging, volumeWithPackaging, qualityScore);
+        this.grindSize = Objects.requireNonNull(grindSize, "grindSize");
+    }
+
+    public GrindSize getGrindSize() {
+        return grindSize;
     }
 
     @Override
     public String getCoffeeType() {
-        return "Мелена кава (Помол: " + grindSize + ")";
+        return "Мелена кава (помол: " + grindSize.getDisplayName() + ")";
     }
 }

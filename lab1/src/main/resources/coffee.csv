@@ -1,0 +1,10 @@
+# Асортимент складу, з якого завантажується фургон.
+# Формат: тип;назва;ціна (грн);вага з упаковкою (кг);об'єм з упаковкою (л);якість (0-100);варіант
+# Варіант: для BEANS — обсмаження (LIGHT, MEDIUM, DARK), для GROUND — помол (FINE, MEDIUM, COARSE),
+#          для INSTANT — упаковка (JAR, SACHET).
+BEANS;Colombia Supremo;1500;1.05;2.5;95;MEDIUM
+GROUND;Espresso Blend;900;0.52;1.2;88;FINE
+INSTANT;Nescafe Gold;300;0.25;0.8;60;JAR
+INSTANT;MacCoffee 3-in-1;10;0.02;0.05;40;SACHET
+BEANS;Ethiopia Yirgacheffe;1800;1.05;2.5;98;LIGHT
+GROUND;Lavazza Qualita Rossa;450;0.26;0.6;82;MEDIUM

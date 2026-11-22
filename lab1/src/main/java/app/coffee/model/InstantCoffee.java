@@ -1,15 +1,24 @@
 package app.coffee.model;
 
-public class InstantCoffee extends Coffee {
-    private String packagingType;
+import java.util.Objects;
 
-    public InstantCoffee(String name, double price, double weightWithPackaging, double volume, int qualityScore, String packagingType) {
-        super(name, price, weightWithPackaging, volume, qualityScore);
-        this.packagingType = packagingType;
+/** Розчинна кава в банках або пакетиках. */
+public class InstantCoffee extends Coffee {
+
+    private final InstantPackaging packaging;
+
+    public InstantCoffee(String name, double price, double weightWithPackaging, double volumeWithPackaging,
+                         int qualityScore, InstantPackaging packaging) {
+        super(name, price, weightWithPackaging, volumeWithPackaging, qualityScore);
+        this.packaging = Objects.requireNonNull(packaging, "packaging");
+    }
+
+    public InstantPackaging getPackaging() {
+        return packaging;
     }
 
     @Override
     public String getCoffeeType() {
-        return "Розчинна кава (" + packagingType + ")";
+        return "Розчинна кава (" + packaging.getDisplayName() + ")";
     }
 }
