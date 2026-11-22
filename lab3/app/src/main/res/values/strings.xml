@@ -18,7 +18,7 @@
     <string name="status_player_won">You sank the whole enemy fleet!</string>
     <string name="status_computer_won">The computer sank your fleet.</string>
 
-    <string name="event_none">Place your fleet or shuffle it, then fire the first shot.</string>
+    <string name="event_none">Shuffle your fleet if you like, then fire the first shot.</string>
     <string name="event_player_miss">You missed at %1$s.</string>
     <string name="event_player_hit">Hit at %1$s! Shoot again.</string>
     <string name="event_player_sunk">You sank a ship of size %1$d! Shoot again.</string>
