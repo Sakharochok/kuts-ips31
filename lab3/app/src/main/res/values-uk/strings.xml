@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Морський бій</string>
+
+    <!-- Класичні українські позначення стовпців: літери Й та Ї пропускаються. -->
+    <string name="column_letters">АБВГДЕЖЗИК</string>
+
+    <string name="board_enemy">Ворожі води</string>
+    <string name="board_player">Ваш флот</string>
+
+    <plurals name="ships_left">
+        <item quantity="one">Залишився %d корабель</item>
+        <item quantity="few">Залишилося %d кораблі</item>
+        <item quantity="many">Залишилося %d кораблів</item>
+        <item quantity="other">Залишилося %d корабля</item>
+    </plurals>
+
+    <string name="status_player_turn">Ваш хід: торкніться клітинки у ворожих водах</string>
+    <string name="status_computer_turn">Комп\'ютер цілиться…</string>
+    <string name="status_player_won">Ви потопили весь ворожий флот!</string>
+    <string name="status_computer_won">Комп\'ютер потопив ваш флот.</string>
+
+    <string name="event_none">Перемішайте флот, якщо бажаєте, і зробіть перший постріл.</string>
+    <string name="event_player_miss">Промах: %1$s.</string>
+    <string name="event_player_hit">Влучання в %1$s! Стріляйте ще.</string>
+    <string name="event_player_sunk">Ви потопили %1$d-палубний корабель! Стріляйте ще.</string>
+    <string name="event_player_repeat">Ви вже стріляли в %1$s.</string>
+    <string name="event_computer_miss">Комп\'ютер промахнувся: %1$s.</string>
+    <string name="event_computer_hit">Комп\'ютер влучив у ваш корабель: %1$s.</string>
+    <string name="event_computer_sunk">Комп\'ютер потопив ваш %1$d-палубний корабель.</string>
+
+    <string name="action_new_game">Нова гра</string>
+    <string name="action_shuffle">Перемішати флот</string>
+    <string name="action_play_again">Зіграти ще</string>
+    <string name="action_close">Закрити</string>
+
+    <string name="dialog_won_title">Перемога!</string>
+    <string name="dialog_lost_title">Поразка</string>
+
+    <string name="legend_ship">корабель</string>
+    <string name="legend_hit">влучання</string>
+    <string name="legend_sunk">потоплено</string>
+    <string name="legend_miss">промах</string>
+
+    <string name="language_menu">Мова</string>
+    <string name="language_system">Як у системі</string>
+</resources>

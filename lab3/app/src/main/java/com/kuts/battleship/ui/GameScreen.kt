@@ -46,7 +46,10 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(stringResource(R.string.app_name)) })
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = { LanguageMenu() },
+            )
         },
     ) { padding ->
         Column(

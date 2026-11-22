@@ -3,7 +3,7 @@
     <string name="app_name">Battleship</string>
 
     <!-- Літери для підпису стовпців поля, по одній на стовпець. -->
-    <string name="column_letters" translatable="true">ABCDEFGHIJ</string>
+    <string name="column_letters">ABCDEFGHIJ</string>
 
     <string name="board_enemy">Enemy waters</string>
     <string name="board_player">Your fleet</string>
@@ -39,4 +39,10 @@
     <string name="legend_hit">hit</string>
     <string name="legend_sunk">sunk</string>
     <string name="legend_miss">miss</string>
+
+    <string name="language_menu">Language</string>
+    <string name="language_system">System default</string>
+    <!-- Назви мов завжди пишуться мовою оригіналу, тому не перекладаються. -->
+    <string name="language_en" translatable="false">English</string>
+    <string name="language_uk" translatable="false">Українська</string>
 </resources>
