@@ -3,13 +3,14 @@ package com.kuts.battleship.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +32,8 @@ fun coordLabel(coord: Coord): String =
     "${stringResource(R.string.column_letters)[coord.col]}${coord.row + 1}"
 
 /**
- * Поле 10x10 з підписами стовпців (літери) та рядків (цифри).
+ * Поле 10x10 з підписами стовпців (літери) та рядків (цифри). Займає всю ширину,
+ * яку йому дали, тому розмір задає батьківський компонент.
  * @param onCellClick null — поле лише для перегляду.
  */
 @Composable
@@ -42,7 +44,7 @@ fun BoardGrid(
     onCellClick: ((Coord) -> Unit)? = null,
 ) {
     val letters = stringResource(R.string.column_letters)
-    Column(modifier.widthIn(max = 360.dp).fillMaxWidth()) {
+    Column(modifier.fillMaxWidth()) {
         Row {
             Label("", Modifier.width(LABEL_WIDTH))
             letters.take(cells.size).forEach { Label(it.toString(), Modifier.weight(1f)) }
@@ -113,5 +115,31 @@ fun Cell(
                 fontSize = 14.sp,
             )
         }
+    }
+}
+
+/** Пояснення позначок на полі. */
+@Composable
+fun Legend(modifier: Modifier = Modifier) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        listOf(
+            CellState.SHIP to R.string.legend_ship,
+            CellState.HIT to R.string.legend_hit,
+            CellState.SUNK to R.string.legend_sunk,
+            CellState.MISS to R.string.legend_miss,
+        ).forEach { (cell, label) ->
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Cell(cell, Modifier.size(20.dp))
+                Text(stringResource(label), style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+    }
+}
+
+/** Мініатюра корабля з [size] клітинок (для вибору корабля під час розстановки). */
+@Composable
+fun ShipPreview(size: Int, modifier: Modifier = Modifier) {
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+        repeat(size) { Box(Modifier.size(10.dp).background(BoardColors.ship)) }
     }
 }

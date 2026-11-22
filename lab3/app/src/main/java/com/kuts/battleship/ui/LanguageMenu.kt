@@ -1,5 +1,6 @@
 package com.kuts.battleship.ui
 
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.DropdownMenu
@@ -17,10 +18,10 @@ import com.kuts.battleship.R
 import timber.log.Timber
 
 /** Мова застосунку; порожній тег — мова системи. */
-enum class AppLanguage(val tag: String) {
-    SYSTEM(""),
-    ENGLISH("en"),
-    UKRAINIAN("uk");
+enum class AppLanguage(val tag: String, @StringRes val labelRes: Int) {
+    SYSTEM("", R.string.language_menu),
+    ENGLISH("en", R.string.language_en),
+    UKRAINIAN("uk", R.string.language_uk);
 
     companion object {
         fun current(): AppLanguage {
@@ -42,24 +43,13 @@ fun LanguageMenu() {
 
     Box {
         TextButton(onClick = { expanded = true }) {
-            Text(
-                when (current) {
-                    AppLanguage.SYSTEM -> stringResource(R.string.language_menu)
-                    else -> current.tag.uppercase()
-                }
-            )
+            Text(stringResource(current.labelRes))
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             AppLanguage.entries.forEach { language ->
                 DropdownMenuItem(
                     text = {
-                        Text(
-                            when (language) {
-                                AppLanguage.SYSTEM -> stringResource(R.string.language_system)
-                                AppLanguage.ENGLISH -> stringResource(R.string.language_en)
-                                AppLanguage.UKRAINIAN -> stringResource(R.string.language_uk)
-                            }
-                        )
+                        Text(stringResource(if (language == AppLanguage.SYSTEM) R.string.language_system else language.labelRes))
                     },
                     onClick = {
                         expanded = false

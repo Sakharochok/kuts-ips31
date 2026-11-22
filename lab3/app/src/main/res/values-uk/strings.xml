@@ -5,6 +5,30 @@
     <!-- Класичні українські позначення стовпців: літери Й та Ї пропускаються. -->
     <string name="column_letters">АБВГДЕЖЗИК</string>
 
+    <!-- Меню -->
+    <string name="menu_subtitle">Ви проти комп\'ютера</string>
+    <string name="menu_new_game">Нова гра</string>
+    <string name="menu_continue">Продовжити гру</string>
+    <string name="menu_rules">Як грати</string>
+
+    <string name="cd_back">Назад</string>
+    <string name="cd_rules">Як грати</string>
+
+    <!-- Розстановка -->
+    <string name="placement_title">Розставте флот</string>
+    <string name="placement_hint_horizontal">Торкніться клітинки, щоб поставити %1$d-палубний корабель. Він ляже вправо.</string>
+    <string name="placement_hint_vertical">Торкніться клітинки, щоб поставити %1$d-палубний корабель. Він ляже вниз.</string>
+    <string name="placement_remove_hint">Торкніться поставленого корабля, щоб забрати його. «Випадково» розставить увесь флот за вас.</string>
+    <string name="placement_invalid">Корабель тут не вміщується: він має бути в межах поля й не торкатися інших кораблів навіть кутами.</string>
+    <string name="placement_done">Усі кораблі на місцях. Починайте бій!</string>
+    <string name="placement_direction_horizontal">Напрямок: горизонтально ↔</string>
+    <string name="placement_direction_vertical">Напрямок: вертикально ↕</string>
+    <string name="action_auto_place">Випадково</string>
+    <string name="action_clear">Очистити</string>
+    <string name="action_start_battle">Почати бій</string>
+
+    <!-- Бій -->
+    <string name="battle_title">Бій</string>
     <string name="board_enemy">Ворожі води</string>
     <string name="board_player">Ваш флот</string>
 
@@ -20,7 +44,7 @@
     <string name="status_player_won">Ви потопили весь ворожий флот!</string>
     <string name="status_computer_won">Комп\'ютер потопив ваш флот.</string>
 
-    <string name="event_none">Перемішайте флот, якщо бажаєте, і зробіть перший постріл.</string>
+    <string name="event_none">Зробіть перший постріл. Після влучання ви стріляєте ще раз.</string>
     <string name="event_player_miss">Промах: %1$s.</string>
     <string name="event_player_hit">Влучання в %1$s! Стріляйте ще.</string>
     <string name="event_player_sunk">Ви потопили %1$d-палубний корабель! Стріляйте ще.</string>
@@ -29,19 +53,33 @@
     <string name="event_computer_hit">Комп\'ютер влучив у ваш корабель: %1$s.</string>
     <string name="event_computer_sunk">Комп\'ютер потопив ваш %1$d-палубний корабель.</string>
 
-    <string name="action_new_game">Нова гра</string>
-    <string name="action_shuffle">Перемішати флот</string>
     <string name="action_play_again">Зіграти ще</string>
-    <string name="action_close">Закрити</string>
+    <string name="action_menu">Меню</string>
 
     <string name="dialog_won_title">Перемога!</string>
     <string name="dialog_lost_title">Поразка</string>
 
-    <string name="legend_ship">корабель</string>
-    <string name="legend_hit">влучання</string>
-    <string name="legend_sunk">потоплено</string>
-    <string name="legend_miss">промах</string>
+    <!-- Правила -->
+    <string name="rules_title">Як грати</string>
+    <string name="rules_goal_title">Мета</string>
+    <string name="rules_goal_text">Потопити всі десять ворожих кораблів раніше, ніж комп\'ютер потопить ваші.</string>
+    <string name="rules_fleet_title">Флот</string>
+    <string name="rules_fleet_text">У кожного 10 кораблів на полі 10×10: один 4-палубний, два 3-палубні, три 2-палубні та чотири 1-палубні. Кораблі прямі й не можуть торкатися один одного навіть кутами.</string>
+    <string name="rules_setup_title">Розстановка</string>
+    <string name="rules_setup_text">Виберіть корабель і напрямок, потім торкніться клітинки, з якої він має починатися. Торкніться поставленого корабля, щоб забрати його. «Випадково» розставить увесь флот за вас. Коли всі кораблі на місцях, натисніть «Почати бій».</string>
+    <string name="rules_turns_title">Бій</string>
+    <string name="rules_turns_text">Торкніться клітинки у ворожих водах, щоб вистрілити. Влучили — стріляєте ще раз, промахнулися — хід переходить до комп\'ютера. Навколо потопленого корабля клітинки позначаються автоматично, бо там кораблів бути не може. Останній постріл обведено жовтим.</string>
+    <string name="rules_marks_title">Позначки на полі</string>
+    <string name="rules_tips_title">Поради</string>
+    <string name="rules_tips_text">Спершу шукайте великі кораблі, стріляючи в шаховому порядку. Після влучання стріляйте в сусідні клітинки, щоб з\'ясувати, куди лежить корабель.</string>
+    <string name="action_got_it">Зрозуміло</string>
 
+    <string name="legend_ship">ваш корабель</string>
+    <string name="legend_hit">влучання</string>
+    <string name="legend_sunk">потоплений корабель</string>
+    <string name="legend_miss">промах або порожня клітинка</string>
+
+    <!-- Мова -->
     <string name="language_menu">Мова</string>
     <string name="language_system">Як у системі</string>
 </resources>

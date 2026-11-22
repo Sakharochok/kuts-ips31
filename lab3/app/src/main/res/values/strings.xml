@@ -5,6 +5,30 @@
     <!-- Літери для підпису стовпців поля, по одній на стовпець. -->
     <string name="column_letters">ABCDEFGHIJ</string>
 
+    <!-- Меню -->
+    <string name="menu_subtitle">You against the computer</string>
+    <string name="menu_new_game">New game</string>
+    <string name="menu_continue">Continue game</string>
+    <string name="menu_rules">How to play</string>
+
+    <string name="cd_back">Back</string>
+    <string name="cd_rules">How to play</string>
+
+    <!-- Розстановка -->
+    <string name="placement_title">Place your fleet</string>
+    <string name="placement_hint_horizontal">Tap a cell to place the %1$d-deck ship there. It extends to the right.</string>
+    <string name="placement_hint_vertical">Tap a cell to place the %1$d-deck ship there. It extends down.</string>
+    <string name="placement_remove_hint">Tap a placed ship to pick it up again. \"Random\" places the whole fleet for you.</string>
+    <string name="placement_invalid">The ship does not fit here: it must stay on the board and must not touch other ships, even at the corners.</string>
+    <string name="placement_done">All ships are in place. Start the battle!</string>
+    <string name="placement_direction_horizontal">Direction: horizontal ↔</string>
+    <string name="placement_direction_vertical">Direction: vertical ↕</string>
+    <string name="action_auto_place">Random</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_start_battle">Start battle</string>
+
+    <!-- Бій -->
+    <string name="battle_title">Battle</string>
     <string name="board_enemy">Enemy waters</string>
     <string name="board_player">Your fleet</string>
 
@@ -18,28 +42,42 @@
     <string name="status_player_won">You sank the whole enemy fleet!</string>
     <string name="status_computer_won">The computer sank your fleet.</string>
 
-    <string name="event_none">Shuffle your fleet if you like, then fire the first shot.</string>
+    <string name="event_none">Fire the first shot. A hit gives you another shot.</string>
     <string name="event_player_miss">You missed at %1$s.</string>
     <string name="event_player_hit">Hit at %1$s! Shoot again.</string>
-    <string name="event_player_sunk">You sank a ship of size %1$d! Shoot again.</string>
+    <string name="event_player_sunk">You sank a %1$d-deck ship! Shoot again.</string>
     <string name="event_player_repeat">You have already fired at %1$s.</string>
     <string name="event_computer_miss">The computer missed at %1$s.</string>
     <string name="event_computer_hit">The computer hit your ship at %1$s.</string>
-    <string name="event_computer_sunk">The computer sank your ship of size %1$d.</string>
+    <string name="event_computer_sunk">The computer sank your %1$d-deck ship.</string>
 
-    <string name="action_new_game">New game</string>
-    <string name="action_shuffle">Shuffle fleet</string>
     <string name="action_play_again">Play again</string>
-    <string name="action_close">Close</string>
+    <string name="action_menu">Menu</string>
 
     <string name="dialog_won_title">Victory!</string>
     <string name="dialog_lost_title">Defeat</string>
 
-    <string name="legend_ship">ship</string>
-    <string name="legend_hit">hit</string>
-    <string name="legend_sunk">sunk</string>
-    <string name="legend_miss">miss</string>
+    <!-- Правила -->
+    <string name="rules_title">How to play</string>
+    <string name="rules_goal_title">Goal</string>
+    <string name="rules_goal_text">Sink all ten enemy ships before the computer sinks yours.</string>
+    <string name="rules_fleet_title">Fleet</string>
+    <string name="rules_fleet_text">Each side has 10 ships on a 10×10 board: one 4-deck, two 3-deck, three 2-deck and four 1-deck ships. Ships are straight lines and may not touch each other, not even at the corners.</string>
+    <string name="rules_setup_title">Placing ships</string>
+    <string name="rules_setup_text">Pick a ship, choose the direction and tap the cell where the ship should start. Tap a placed ship to remove it. \"Random\" places the whole fleet for you. When all ships are in place, press \"Start battle\".</string>
+    <string name="rules_turns_title">Battle</string>
+    <string name="rules_turns_text">Tap a cell in enemy waters to fire. If you hit, you shoot again; after a miss the computer takes its turn. When a ship is sunk, the cells around it are marked automatically because there can be no ships there. The last shot is outlined in yellow.</string>
+    <string name="rules_marks_title">Board symbols</string>
+    <string name="rules_tips_title">Tips</string>
+    <string name="rules_tips_text">Look for big ships first by shooting in a checkerboard pattern. After a hit, try the neighbouring cells to find out which way the ship goes.</string>
+    <string name="action_got_it">Got it</string>
 
+    <string name="legend_ship">your ship</string>
+    <string name="legend_hit">hit</string>
+    <string name="legend_sunk">sunk ship</string>
+    <string name="legend_miss">miss or empty cell</string>
+
+    <!-- Мова -->
     <string name="language_menu">Language</string>
     <string name="language_system">System default</string>
     <!-- Назви мов завжди пишуться мовою оригіналу, тому не перекладаються. -->
