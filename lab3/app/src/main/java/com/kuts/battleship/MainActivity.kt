@@ -3,16 +3,18 @@ package com.kuts.battleship
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import com.kuts.battleship.ui.BattleshipTheme
+import com.kuts.battleship.ui.GameScreen
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Timber.d("MainActivity created (restored=%s)", savedInstanceState != null)
         setContent {
-            MaterialTheme {
-                Text(getString(R.string.app_name))
+            BattleshipTheme {
+                GameScreen()
             }
         }
     }
