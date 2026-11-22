@@ -38,6 +38,12 @@ class Board(val size: Int = SIZE) {
         _ships += ship
     }
 
+    /** Прибирає корабель під час розстановки (до початку бою). */
+    fun remove(ship: Ship) {
+        check(shots.isEmpty()) { "Ships cannot be moved after the battle has started" }
+        _ships.remove(ship)
+    }
+
     /**
      * Постріл у клітинку. Після потоплення корабля всі клітинки навколо нього
      * автоматично вважаються обстріляними, бо там кораблів бути не може.

@@ -2,7 +2,6 @@ package com.kuts.battleship.game
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotSame
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import kotlin.random.Random
@@ -24,7 +23,6 @@ class GameTest {
     fun `player starts`() {
         val game = Game(Random(1))
         assertEquals(Phase.PLAYER_TURN, game.phase)
-        assertFalse(game.isStarted)
         assertFalse(game.isOver)
         assertEquals(Board.FLEET.size, game.playerBoard.ships.size)
         assertEquals(Board.FLEET.size, game.computerBoard.ships.size)
@@ -36,7 +34,6 @@ class GameTest {
 
         assertEquals(ShotResult.Miss, game.playerShoot(Coord(5, 5)))
         assertEquals(Phase.COMPUTER_TURN, game.phase)
-        assertTrue(game.isStarted)
     }
 
     @Test
@@ -51,7 +48,7 @@ class GameTest {
     }
 
     @Test
-    fun `repeated shot keeps the turn and does not start the game`() {
+    fun `repeated shot keeps the turn`() {
         val game = smallGame()
         game.playerShoot(Coord(5, 5))
         while (game.phase == Phase.COMPUTER_TURN) game.computerShoot()
@@ -101,15 +98,7 @@ class GameTest {
     }
 
     @Test
-    fun `fleet can be shuffled only before the first shot`() {
-        val game = Game(Random(5))
-        val before = game.playerBoard
-
-        game.shufflePlayerFleet()
-        assertNotSame(before, game.playerBoard)
-        assertEquals(Board.FLEET.size, game.playerBoard.ships.size)
-
-        game.playerShoot(Coord(0, 0))
-        assertThrows { game.shufflePlayerFleet() }
+    fun `game requires placed fleets`() {
+        assertThrows { Game(playerBoard = Board()) }
     }
 }

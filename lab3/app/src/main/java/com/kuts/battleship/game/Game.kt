@@ -13,37 +13,24 @@ data class Move(val target: Coord, val result: ShotResult)
  */
 class Game(
     random: Random = Random.Default,
-    private val placer: FleetPlacer = FleetPlacer(random),
+    placer: FleetPlacer = FleetPlacer(random),
     private val computer: ComputerPlayer = ComputerPlayer(random),
-    playerBoard: Board = placer.createBoard(),
+    val playerBoard: Board = placer.createBoard(),
     val computerBoard: Board = placer.createBoard(),
 ) {
-    var playerBoard: Board = playerBoard
-        private set
-
     var phase: Phase = Phase.PLAYER_TURN
-        private set
-
-    /** Чи був уже хоч один постріл (після цього флот гравця переставляти не можна). */
-    var isStarted: Boolean = false
         private set
 
     val isOver: Boolean get() = phase == Phase.PLAYER_WON || phase == Phase.COMPUTER_WON
 
     init {
+        require(playerBoard.ships.isNotEmpty() && computerBoard.ships.isNotEmpty()) { "Both fleets must be placed" }
         Timber.i("New game started")
-    }
-
-    fun shufflePlayerFleet() {
-        check(!isStarted) { "Fleet can only be shuffled before the first shot" }
-        playerBoard = placer.createBoard(playerBoard.size)
-        Timber.d("Player fleet shuffled")
     }
 
     fun playerShoot(target: Coord): ShotResult {
         check(phase == Phase.PLAYER_TURN) { "Not player's turn: $phase" }
         val result = computerBoard.shoot(target)
-        if (result != ShotResult.AlreadyShot) isStarted = true
         Timber.d("Player shoots %s -> %s", target, result)
 
         when {
