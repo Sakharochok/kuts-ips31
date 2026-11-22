@@ -9,3 +9,19 @@
 * **`lab1/`** — Розробка Java-додатка «Coffee Van» (ООП, колекції, сортування).
 * **`lab2/`** — Варіант 14 («Концерти танцювального колективу»): XML, XSD-схема, XSL-трансформація, парсери DOM/SAX/StAX, валідація, Comparator, модульні тести.
 * **`lab3/`** — Варіант 1: Android-гра «Морський бій» (людина проти комп'ютера). Kotlin + Jetpack Compose, логування через Timber, локалізація uk/en з перемиканням мови в застосунку, unit-тести логіки гри.
+
+## Запуск
+
+**Лаба 2** (потрібні JDK 17+ і Maven):
+```
+cd lab2
+mvn test                                  # тести
+mvn compile exec:java -Dexec.mainClass=com.dance.Main   # або запустити Main з IDE
+```
+
+**Лаба 3** (потрібна Android Studio):
+1. File → Open → папка `lab3`, дочекатися Gradle Sync.
+2. Вибрати конфігурацію `app` та емулятор або телефон.
+3. Натиснути ▶ Run.
+
+Unit-тести гри: `./gradlew testDebugUnitTest` у папці `lab3`.
