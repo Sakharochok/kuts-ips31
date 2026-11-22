@@ -44,12 +44,12 @@ fun BoardGrid(
     val letters = stringResource(R.string.column_letters)
     Column(modifier.widthIn(max = 360.dp).fillMaxWidth()) {
         Row {
-            Label("")
+            Label("", Modifier.width(LABEL_WIDTH))
             letters.take(cells.size).forEach { Label(it.toString(), Modifier.weight(1f)) }
         }
         cells.forEachIndexed { row, rowCells ->
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Label((row + 1).toString())
+                Label((row + 1).toString(), Modifier.width(LABEL_WIDTH))
                 rowCells.forEachIndexed { col, state ->
                     val coord = Coord(row, col)
                     Cell(
@@ -65,7 +65,7 @@ fun BoardGrid(
 }
 
 @Composable
-private fun Label(text: String, modifier: Modifier = Modifier.width(LABEL_WIDTH)) {
+private fun Label(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,
         modifier = modifier,
